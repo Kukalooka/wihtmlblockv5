@@ -39,6 +39,9 @@ class Wihtmlblock extends Module implements WidgetInterface
                 `content` varchar(255) NOT NULL,
                 PRIMARY KEY (`id`)
             ) ENGINE=' . _MYSQL_ENGINE_ . ' DEFAULT CHARSET=UTF8;') ||
+            !Db::getInstance()->execute(
+                'INSERT INTO `' . _DB_PREFIX_ . 'tpl_content` (`id`, `content`)
+                VALUES (1, "Hello :>")') ||
             !Configuration::updateValue('MYMODULE_NAME', 'wihtmlblock')
         ) {
             return false;
@@ -58,6 +61,13 @@ class Wihtmlblock extends Module implements WidgetInterface
 
     public function hookHeader()
     {
+        $query=Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('SELECT content FROM `'._DB_PREFIX_.'tpl_content`');
+        $custdata;
+        foreach ($query as $row)
+        {
+            $custdata = $row['content'];
+        }
+        $this->context->smarty->assign("query", $custdata);
         return $this->display(__FILE__,'template.tpl');
     }
 
@@ -69,6 +79,48 @@ class Wihtmlblock extends Module implements WidgetInterface
     public function getWidgetVariables($hookName, array $configuration)
     {
 
+    }
+
+    public function displayForm()
+    {
+        // Init Fields form array
+        $form = [
+            'form' => [
+                'legend' => [
+                    'title' => $this->l('Settings'),
+                ],
+                'input' => [
+                    [
+                        'type' => 'text',
+                        'label' => $this->l('Configuration value'),
+                        'name' => 'MYMODULE_CONFIG',
+                        'size' => 20,
+                        'required' => true,
+                    ],
+                ],
+                'submit' => [
+                    'title' => $this->l('Save'),
+                    'class' => 'btn btn-default pull-right',
+                ],
+            ],
+        ];
+
+        $helper = new HelperForm();
+
+        // Module, token and currentIndex
+        $helper->table = $this->table;
+        $helper->name_controller = $this->name;
+        $helper->token = Tools::getAdminTokenLite('AdminModules');
+        $helper->currentIndex = AdminController::$currentIndex . '&' . http_build_query(['configure' => $this->name]);
+        $helper->submit_action = 'submit' . $this->name;
+
+        // Default language
+        $helper->default_form_language = (int) Configuration::get('PS_LANG_DEFAULT');
+
+        // Load current value into the form
+        $helper->fields_value['MYMODULE_CONFIG'] = Tools::getValue('MYMODULE_CONFIG', Configuration::get('MYMODULE_CONFIG'));
+
+        return $helper->generateForm([$form]);
     }
 
     public function getContent()
@@ -87,6 +139,9 @@ class Wihtmlblock extends Module implements WidgetInterface
             } else {
                 // value is ok, update it and display a confirmation message
                 Configuration::updateValue('MYMODULE_CONFIG', $configValue);
+                Db::getInstance()->execute(
+                    'UPDATE `' . _DB_PREFIX_ . 'tpl_content` SET content ="' . $configValue . '"
+                     WHERE id=1');
                 $output = $this->displayConfirmation($this->l('Settings updated'));
             }
         }

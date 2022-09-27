@@ -1,1 +1,1 @@
-<p>Hello World</p>
+<p>{$query}</p>
