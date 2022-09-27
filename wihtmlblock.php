@@ -18,10 +18,10 @@ class Wihtmlblock extends Module implements WidgetInterface
 
         parent::__construct();
 
-        $this->displayName = $this->l('Wi HTML Block V1', 'wihtmlblock');
-        $this->description = $this->l('Wi HTML Block V1', 'wihtmlblock');
+        $this->displayName = $this->l('Wi HTML Block V2', 'wihtmlblock');
+        $this->description = $this->l('Wi HTML Block V2', 'wihtmlblock');
 
-        $this->confirmUninstall = $this->l('Wi HTML Block V1', 'wihtmlblock');
+        $this->confirmUninstall = $this->l('Wi HTML Block V2', 'wihtmlblock');
     }
 
     public function install()
@@ -92,7 +92,7 @@ class Wihtmlblock extends Module implements WidgetInterface
                 'input' => [
                     [
                         'type' => 'text',
-                        'label' => $this->l('Configuration value'),
+                        'label' => $this->l('TPL content'),
                         'name' => 'MYMODULE_CONFIG',
                         'size' => 20,
                         'required' => true,

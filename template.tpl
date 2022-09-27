@@ -1,1 +1,1 @@
-<p>{$query}</p>
+{$query}
