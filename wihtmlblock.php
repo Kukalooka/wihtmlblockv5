@@ -10,18 +10,18 @@ class Wihtmlblock extends Module implements WidgetInterface
     public function __construct()
     {
         $this->name = 'wihtmlblock';
-        $this->version = '1.0.0';
-        $this->author = 'Alex';
+        $this->version = '3.0.0';
+        $this->author = 'WEBimpuls.pl';
         $this->need_instance = 1;
         $this->ps_versions_compliancy = array('min' => '1.7.1.0', 'max' => _PS_VERSION_);
         $this->bootstrap = true;
 
         parent::__construct();
 
-        $this->displayName = $this->l('Wi HTML Block V2', 'wihtmlblock');
-        $this->description = $this->l('Wi HTML Block V2', 'wihtmlblock');
+        $this->displayName = $this->l('Wi HTML Block V3', 'wihtmlblock');
+        $this->description = $this->l('Wi HTML Block V3', 'wihtmlblock');
 
-        $this->confirmUninstall = $this->l('Wi HTML Block V2', 'wihtmlblock');
+        $this->confirmUninstall = $this->l('Wi HTML Block V3', 'wihtmlblock');
     }
 
     public function install()
@@ -33,6 +33,7 @@ class Wihtmlblock extends Module implements WidgetInterface
         if(!parent::install() ||
             !$this->registerHook('leftColumn') ||
             !$this->registerHook('header') || 
+            !$this->installTab() ||
             !Db::getInstance()->execute(
                 'CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . 'tpl_content` (
                 `id` int(10) unsigned NOT NULL,
@@ -51,7 +52,8 @@ class Wihtmlblock extends Module implements WidgetInterface
     public function uninstall()
     {
         if(!parent::uninstall() || 
-            !Configuration::deleteByName('MYMODULE_NAME')
+            !Configuration::deleteByName('MYMODULE_NAME') ||
+            !$this->uninstallTab()
         ){
             return false;
         }
@@ -81,74 +83,72 @@ class Wihtmlblock extends Module implements WidgetInterface
 
     }
 
-    public function displayForm()
-    {
-        // Init Fields form array
-        $form = [
-            'form' => [
-                'legend' => [
-                    'title' => $this->l('Settings'),
-                ],
-                'input' => [
-                    [
-                        'type' => 'text',
-                        'label' => $this->l('TPL content'),
-                        'name' => 'MYMODULE_CONFIG',
-                        'size' => 20,
-                        'required' => true,
-                    ],
-                ],
-                'submit' => [
-                    'title' => $this->l('Save'),
-                    'class' => 'btn btn-default pull-right',
-                ],
-            ],
-        ];
-
-        $helper = new HelperForm();
-
-        // Module, token and currentIndex
-        $helper->table = $this->table;
-        $helper->name_controller = $this->name;
-        $helper->token = Tools::getAdminTokenLite('AdminModules');
-        $helper->currentIndex = AdminController::$currentIndex . '&' . http_build_query(['configure' => $this->name]);
-        $helper->submit_action = 'submit' . $this->name;
-
-        // Default language
-        $helper->default_form_language = (int) Configuration::get('PS_LANG_DEFAULT');
-
-        // Load current value into the form
-        $helper->fields_value['MYMODULE_CONFIG'] = Tools::getValue('MYMODULE_CONFIG', Configuration::get('MYMODULE_CONFIG'));
-
-        return $helper->generateForm([$form]);
-    }
-
     public function getContent()
     {
-        $output = '';
+        $output = 'Created by WEBimpuls';
 
-        // this part is executed only when the form is submitted
-        if (Tools::isSubmit('submit' . $this->name)) {
-            // retrieve the value set by the user
-            $configValue = (string) Tools::getValue('MYMODULE_CONFIG');
+        return $output;
+    }
 
-            // check that the value is valid
-            if (empty($configValue) || !Validate::isGenericName($configValue)) {
-                // invalid value, show an error
-                $output = $this->displayError($this->l('Invalid Configuration value'));
-            } else {
-                // value is ok, update it and display a confirmation message
-                Configuration::updateValue('MYMODULE_CONFIG', $configValue);
-                Db::getInstance()->execute(
-                    'UPDATE `' . _DB_PREFIX_ . 'tpl_content` SET content ="' . $configValue . '"
-                     WHERE id=1');
-                $output = $this->displayConfirmation($this->l('Settings updated'));
-            }
+    /**
+     * Install menu tab.
+     *
+     * @return bool
+     * @throws PrestaShopDatabaseException
+     * @throws PrestaShopException
+     */
+    private function installTab()
+    {
+        $tabId = (int) Tab::getIdFromClassName('AdminWihtmlblockController');
+        if (!$tabId) {
+        $tabId = null;
+        }
+        $tab = new Tab($tabId);
+        $tab->active = 1;
+        $tab->class_name = 'AdminWihtmlblockController';
+        // Only since 1.7.7, you can define a route name
+        $tab->route_name = 'blockRoute';
+        $tab->name = array();
+        foreach (Language::getLanguages() as $lang) {
+            $tab->name[$lang['id_lang']] = $this->trans('HTML Blocks', array(), 'Modules.Wihtmlblock.Admin', 
+            $lang['locale']);
+        }
+        $tab->id_parent = (int) Tab::getIdFromClassName('IMPROVE');
+        $tab->module = $this->name;
+        $tab->icon = 'vibration';
+        return $tab->save();
+    }
+    /**
+     * Uninstall menu tab.
+     *
+     * @return bool
+     * @throws PrestaShopDatabaseException
+     * @throws PrestaShopException
+     */
+    private function uninstallTab()
+    {
+        $tabId = (int) Tab::getIdFromClassName('AdminWihtmlblockController');
+        if (!$tabId) {
+            return true;
+        }
+        $tab = new Tab($tabId);
+        return $tab->delete();
+    }
+
+    public function isUsingNewTranslationSystem()
+    {
+        return true;
+    }
+
+    public function hookDisplayBackOfficeHeader()
+    {
+        if (Tools::getValue('configure') != $this->name) {
+            return;
         }
 
-        // display any message, then the form
-        return $output . $this->displayForm();
+        $this->context->controller->addJS($this->_path.' /test.js');
     }
+
 }
 
 ?>

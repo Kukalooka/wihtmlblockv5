@@ -1,0 +1,11 @@
+blockRoute:
+    path: wihtmlblock/block
+    methods: [GET]
+    defaults:
+      _controller: 'Wihtmlblock\Controller\AdminWihtmlblockController::renderForm'
+
+uploadRoute:
+    path: wihtmlblock/block/upload
+    methods: [GET, POST]
+    defaults:
+      _controller: 'Wihtmlblock\Controller\AdminWihtmlblockController::uploadForm'
