@@ -33,6 +33,7 @@ class Wihtmlblock extends Module implements WidgetInterface
         if(!parent::install() ||
             !$this->registerHook('leftColumn') ||
             !$this->registerHook('header') || 
+            !$this->registerHook('actionAdminControllerSetMedia') || 
             !$this->installTab() ||
             !Db::getInstance()->execute(
                 'CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . 'tpl_content` (
@@ -140,15 +141,11 @@ class Wihtmlblock extends Module implements WidgetInterface
         return true;
     }
 
-    public function hookDisplayBackOfficeHeader()
-    {
-        if (Tools::getValue('configure') != $this->name) {
-            return;
-        }
-
-        $this->context->controller->addJS($this->_path.' /test.js');
+    public function hookActionAdminControllerSetMedia($params)
+    { 
+        // Adds your's JavaScript file from a module's directory
+        $this->context->controller->addJS($this->_path . 'Resources/public/js/editarea/edit_area/edit_area_full.js');
     }
-
 }
 
 ?>
