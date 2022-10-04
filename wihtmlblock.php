@@ -10,7 +10,7 @@ class Wihtmlblock extends Module implements WidgetInterface
     public function __construct()
     {
         $this->name = 'wihtmlblock';
-        $this->version = '3.0.0';
+        $this->version = '5.0.0';
         $this->author = 'WEBimpuls.pl';
         $this->need_instance = 1;
         $this->ps_versions_compliancy = array('min' => '1.7.1.0', 'max' => _PS_VERSION_);
@@ -18,10 +18,10 @@ class Wihtmlblock extends Module implements WidgetInterface
 
         parent::__construct();
 
-        $this->displayName = $this->l('Wi HTML Block V3', 'wihtmlblock');
-        $this->description = $this->l('Wi HTML Block V3', 'wihtmlblock');
+        $this->displayName = $this->l('Wi HTML Block V5', 'wihtmlblock');
+        $this->description = $this->l('Wi HTML Block V5', 'wihtmlblock');
 
-        $this->confirmUninstall = $this->l('Wi HTML Block V3', 'wihtmlblock');
+        $this->confirmUninstall = $this->l('Wi HTML Block V5', 'wihtmlblock');
     }
 
     public function install()
@@ -37,13 +37,13 @@ class Wihtmlblock extends Module implements WidgetInterface
             !$this->installTab() ||
             !Db::getInstance()->execute(
                 'CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . 'tpl_content` (
-                `id` int(10) unsigned NOT NULL,
+                `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
                 `content` varchar(255) NOT NULL,
+                `toggle` BIT DEFAULT 0,
+                `orderNum` int,
+                `hook` varchar(255),
                 PRIMARY KEY (`id`)
             ) ENGINE=' . _MYSQL_ENGINE_ . ' DEFAULT CHARSET=UTF8;') ||
-            !Db::getInstance()->execute(
-                'INSERT INTO `' . _DB_PREFIX_ . 'tpl_content` (`id`, `content`)
-                VALUES (1, "Hello :>")') ||
             !Configuration::updateValue('MYMODULE_NAME', 'wihtmlblock')
         ) {
             return false;
@@ -54,6 +54,7 @@ class Wihtmlblock extends Module implements WidgetInterface
     {
         if(!parent::uninstall() || 
             !Configuration::deleteByName('MYMODULE_NAME') ||
+            !Db::getInstance()->execute('DROP TABLE `' . _DB_PREFIX_ . 'tpl_content`') || 
             !$this->uninstallTab()
         ){
             return false;
@@ -62,21 +63,16 @@ class Wihtmlblock extends Module implements WidgetInterface
         return true;
     }
 
-    public function hookHeader()
+    public function renderWidget($hookName, array $configuration)
     {
-        $query=Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('SELECT content FROM `'._DB_PREFIX_.'tpl_content`');
-        $custdata;
+        $query=Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('SELECT content FROM `'._DB_PREFIX_.'tpl_content` WHERE toggle=0 AND hook="' . $hookName . '" ORDER BY orderNum');
+        $custdata = array();
         foreach ($query as $row)
         {
-            $custdata = $row['content'];
+            $custdata[] = $row['content'];
         }
         $this->context->smarty->assign("query", $custdata);
         return $this->display(__FILE__,'template.tpl');
-    }
-
-    public function renderWidget($hookName, array $configuration)
-    {
-
     }
 
     public function getWidgetVariables($hookName, array $configuration)

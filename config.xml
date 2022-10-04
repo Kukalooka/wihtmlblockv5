@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <module>
     <name>wihtmlblock</name>
-    <displayName><![CDATA[Wi HTML Block V3]]></displayName>
-    <version><![CDATA[3.0.0]]></version>
-    <description><![CDATA[Wi HTML Block V3]]></description>
+    <displayName><![CDATA[Wi HTML Block V5]]></displayName>
+    <version><![CDATA[5.0.0]]></version>
+    <description><![CDATA[Wi HTML Block V5]]></description>
     <author><![CDATA[WEBimpuls.pl]]></author>
     <tab><![CDATA[]]></tab>
-	<confirmUninstall><![CDATA[Wi HTML Block V3]]></confirmUninstall>
+	<confirmUninstall><![CDATA[Wi HTML Block V5]]></confirmUninstall>
     <is_configurable>1</is_configurable>
     <need_instance>1</need_instance>
 	<limited_countries></limited_countries>

@@ -9,3 +9,28 @@ uploadRoute:
     methods: [GET, POST]
     defaults:
       _controller: 'Wihtmlblock\Controller\AdminWihtmlblockController::uploadForm'
+
+addRoute:
+    path: wihtmlblock/block/add
+    methods: [GET, POST]
+    defaults:
+      _controller: 'Wihtmlblock\Controller\AdminWihtmlblockController::addBlock'
+
+editRoute:
+    path: wihtmlblock/block/edit
+    methods: [GET, POST]
+    defaults:
+      _controller: 'Wihtmlblock\Controller\AdminWihtmlblockController::editBlock'
+
+indexRoute:
+    path: wihtmlblock/block/index
+    methods: [GET, POST]
+    defaults:
+      _controller: 'Wihtmlblock\Controller\AdminWihtmlblockController::indexBlock'
+
+hookRoute:
+    path: wihtmlblock/block/hook
+    methods: [GET, POST]
+    defaults:
+      _controller: 'Wihtmlblock\Controller\AdminWihtmlblockController::hookBlock'
+
