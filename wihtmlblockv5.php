@@ -5,11 +5,11 @@ if (!defined('_PS_VERSION_'))
 
 use PrestaShop\PrestaShop\Core\Module\WidgetInterface;
 
-class Wihtmlblock extends Module implements WidgetInterface
+class Wihtmlblockv5 extends Module implements WidgetInterface
 {
     public function __construct()
     {
-        $this->name = 'wihtmlblock';
+        $this->name = 'wihtmlblockv5';
         $this->version = '5.0.0';
         $this->author = 'WEBimpuls.pl';
         $this->need_instance = 1;
@@ -18,10 +18,10 @@ class Wihtmlblock extends Module implements WidgetInterface
 
         parent::__construct();
 
-        $this->displayName = $this->l('Wi HTML Block V5', 'wihtmlblock');
-        $this->description = $this->l('Wi HTML Block V5', 'wihtmlblock');
+        $this->displayName = $this->l('Wi HTML Block V5', 'wihtmlblockv5');
+        $this->description = $this->l('Wi HTML Block V5', 'wihtmlblockv5');
 
-        $this->confirmUninstall = $this->l('Wi HTML Block V5', 'wihtmlblock');
+        $this->confirmUninstall = $this->l('Wi HTML Block V5', 'wihtmlblockv5');
     }
 
     public function install()
@@ -44,7 +44,7 @@ class Wihtmlblock extends Module implements WidgetInterface
                 `hook` varchar(255),
                 PRIMARY KEY (`id`)
             ) ENGINE=' . _MYSQL_ENGINE_ . ' DEFAULT CHARSET=UTF8;') ||
-            !Configuration::updateValue('MYMODULE_NAME', 'wihtmlblock')
+            !Configuration::updateValue('MYMODULE_NAME', 'wihtmlblockv5')
         ) {
             return false;
         }
@@ -96,18 +96,18 @@ class Wihtmlblock extends Module implements WidgetInterface
      */
     private function installTab()
     {
-        $tabId = (int) Tab::getIdFromClassName('AdminWihtmlblockController');
+        $tabId = (int) Tab::getIdFromClassName('AdminWihtmlblockv5Controller');
         if (!$tabId) {
         $tabId = null;
         }
         $tab = new Tab($tabId);
         $tab->active = 1;
-        $tab->class_name = 'AdminWihtmlblockController';
+        $tab->class_name = 'AdminWihtmlblockv5Controller';
         // Only since 1.7.7, you can define a route name
-        $tab->route_name = 'blockRoute';
+        $tab->route_name = 'blockRoutev5';
         $tab->name = array();
         foreach (Language::getLanguages() as $lang) {
-            $tab->name[$lang['id_lang']] = $this->trans('HTML Blocks', array(), 'Modules.Wihtmlblock.Admin', 
+            $tab->name[$lang['id_lang']] = $this->trans('HTML Blocks V5', array(), 'Modules.Wihtmlblockv5.Admin', 
             $lang['locale']);
         }
         $tab->id_parent = (int) Tab::getIdFromClassName('IMPROVE');

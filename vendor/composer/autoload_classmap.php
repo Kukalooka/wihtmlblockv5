@@ -7,6 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
-    'Wihtmlblock' => $baseDir . '/wihtmlblock.php',
-    'Wihtmlblock\\Controller\\AdminWihtmlblockController' => $baseDir . '/src/Controller/AdminWihtmlblockController.php',
+    'Wihtmlblockv5' => $baseDir . '/wihtmlblockv5.php',
 );

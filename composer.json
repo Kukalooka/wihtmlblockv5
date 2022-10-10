@@ -1,5 +1,5 @@
 {
-    "name": "webimpuls/wihtmlblock",
+    "name": "webimpuls/wihtmlblockv5",
     "description": "<module description>",
     "authors": [
     {
@@ -12,10 +12,10 @@
     },
     "autoload": {
     "psr-4": {
-    "Wihtmlblock\\": "src/"
+    "Wihtmlblockv5\\": "src/"
     },
     "classmap": [
-    "wihtmlblock.php"
+    "wihtmlblockv5.php"
     ],
     "exclude-from-classmap": []
     },

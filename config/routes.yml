@@ -1,36 +1,36 @@
-blockRoute:
-    path: wihtmlblock/block
+blockRoutev5:
+    path: wihtmlblockv5/block
     methods: [GET]
     defaults:
-      _controller: 'Wihtmlblock\Controller\AdminWihtmlblockController::renderForm'
+      _controller: 'Wihtmlblockv5\Controller\AdminWihtmlblockv5Controller::renderForm'
 
-uploadRoute:
-    path: wihtmlblock/block/upload
+uploadRoutev5:
+    path: wihtmlblockv5/block/upload
     methods: [GET, POST]
     defaults:
-      _controller: 'Wihtmlblock\Controller\AdminWihtmlblockController::uploadForm'
+      _controller: 'Wihtmlblockv5\Controller\AdminWihtmlblockv5Controller::uploadForm'
 
-addRoute:
-    path: wihtmlblock/block/add
+addRoutev5:
+    path: wihtmlblockv5/block/add
     methods: [GET, POST]
     defaults:
-      _controller: 'Wihtmlblock\Controller\AdminWihtmlblockController::addBlock'
+      _controller: 'Wihtmlblockv5\Controller\AdminWihtmlblockv5Controller::addBlock'
 
-editRoute:
-    path: wihtmlblock/block/edit
+editRoutev5:
+    path: wihtmlblockv5/block/edit
     methods: [GET, POST]
     defaults:
-      _controller: 'Wihtmlblock\Controller\AdminWihtmlblockController::editBlock'
+      _controller: 'Wihtmlblockv5\Controller\AdminWihtmlblockv5Controller::editBlock'
 
-indexRoute:
-    path: wihtmlblock/block/index
+indexRoutev5:
+    path: wihtmlblockv5/block/index
     methods: [GET, POST]
     defaults:
-      _controller: 'Wihtmlblock\Controller\AdminWihtmlblockController::indexBlock'
+      _controller: 'Wihtmlblockv5\Controller\AdminWihtmlblockv5Controller::indexBlock'
 
 hookRoute:
-    path: wihtmlblock/block/hook
+    path: wihtmlblockv5/block/hook
     methods: [GET, POST]
     defaults:
-      _controller: 'Wihtmlblock\Controller\AdminWihtmlblockController::hookBlock'
+      _controller: 'Wihtmlblockv5\Controller\AdminWihtmlblockv5Controller::hookBlock'
 

@@ -6,5 +6,5 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Wihtmlblock\\' => array($baseDir . '/src'),
+    'Wihtmlblockv5\\' => array($baseDir . '/src'),
 );

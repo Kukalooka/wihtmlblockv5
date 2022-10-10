@@ -4,17 +4,17 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit22ba8839dd5d1c65ea3c1beb0819858a
+class ComposerStaticInita4019e30b2db1b445db5ee67bd4472b0
 {
     public static $prefixLengthsPsr4 = array (
         'W' => 
         array (
-            'Wihtmlblock\\' => 12,
+            'Wihtmlblockv5\\' => 14,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Wihtmlblock\\' => 
+        'Wihtmlblockv5\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
@@ -22,16 +22,15 @@ class ComposerStaticInit22ba8839dd5d1c65ea3c1beb0819858a
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-        'Wihtmlblock' => __DIR__ . '/../..' . '/wihtmlblock.php',
-        'Wihtmlblock\\Controller\\AdminWihtmlblockController' => __DIR__ . '/../..' . '/src/Controller/AdminWihtmlblockController.php',
+        'Wihtmlblockv5' => __DIR__ . '/../..' . '/wihtmlblockv5.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit22ba8839dd5d1c65ea3c1beb0819858a::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit22ba8839dd5d1c65ea3c1beb0819858a::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit22ba8839dd5d1c65ea3c1beb0819858a::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInita4019e30b2db1b445db5ee67bd4472b0::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInita4019e30b2db1b445db5ee67bd4472b0::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInita4019e30b2db1b445db5ee67bd4472b0::$classMap;
 
         }, null, ClassLoader::class);
     }

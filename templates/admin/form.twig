@@ -7,11 +7,11 @@
 </head>
 <body>
 	<p>{{ title }}</p>
-	<form method="post" action="{{ path('addRoute') }}">
+	<form method="post" action="{{ path('addRoutev5') }}">
 		<input type="submit" value="Add new block">
 	</form> <br>
 
-	<form method="post" action="{{ path('uploadRoute') }}">
+	<form method="post" action="{{ path('uploadRoutev5') }}">
 		<select id="block" name="block">
 			{% for table in records %}
 			<option value="{{ table.id }}">{{ table.content }}</option>
@@ -25,7 +25,8 @@
 		<input type="submit" value="{{ submit }}">
 	</form>
 
-	<form method="post" action="{{ path('editRoute') }}">
+	<p>{{ title2 }}</p>
+	<form method="post" action="{{ path('editRoutev5') }}">
 		<select id="block" name="block">
 			{% for table in records %}
 			<option value="{{ table.id }}">{{ table.content }}</option>
@@ -34,7 +35,8 @@
 		<input type="submit" name="disableButton" value="{{ toggle }}">
 		<input type="submit" name="deleteButton" value="{{ delete }}">
 	</form>
-	<form method="post" action="{{ path('indexRoute') }}">
+	<p>{{ title3 }}</p>
+	<form method="post" action="{{ path('indexRoutev5') }}">
 		<select id="block" name="block">
 			{% for table in records %}
 			<option value="{{ table.id }}">{{ table.content }}</option>
@@ -43,6 +45,7 @@
 		<input type="number" name="number" required>
 		<input type="submit" value="{{ submit }}">
 	</form>
+	<p>{{ title4 }}</p>
 	<form method="post" action="{{ path('hookRoute') }}">
 		<select id="hook" name="hook">
 			{% for table in hooks %}
